@@ -21,7 +21,7 @@ subreddit = 'all'
 lineOneFlag = False
 lineTwoFlag = False
 lineThreeFlag = False
-DELIM = '~'
+DELIM = ','
 
 dictionary = cmudict.dict()
 
