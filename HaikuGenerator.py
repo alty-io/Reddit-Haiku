@@ -6,12 +6,7 @@ Using the PRAW library and CMU pronunciation dictionary, this script
 parses the stream of current reddit comments for lines of 5 and 7 syllables.
 These are then constructed into a haiku and displayed to the user.
 
-
-test edit by Tyler
-"""
-
-"""
-This is a test edit
+ULTRA TEST EDIT
 """
 
 import praw
