@@ -2,16 +2,10 @@
 haiku generator v0.1
 by Alex Hildreth and Tyler Sullivan
 
-Using the PRAW library and CMU pronunciation dictionary, this script
+Using the PRAW library and CMU pronunciation dictionary (part of NLTK), this script
 parses the stream of current reddit comments for lines of 5 and 7 syllables.
 These are then constructed into a haiku and displayed to the user.
 
-
-test edit by Tyler
-"""
-
-"""
-This is a test edit
 """
 
 import praw
@@ -25,11 +19,12 @@ user_agent = "User-Agent: HaikuGen 0.1 (by /u/teefour)"
 
 r = praw.Reddit(user_agent=user_agent)
 
+#Oauth authentication, will complete when Reddit removes direct login ability
 #r.set_oauth_app_info(client_id='VU5UkWmSxrKo8Q',
 #                    client_secret='lEqInv-O7Hygig3y3dILtNYpYz8',
 
 r.login('FreshHaikuBot', 'fishsticks', disable_warning=True)
-# subreddit = 'all'
+subreddit = 'all'
 
 
 
@@ -58,7 +53,7 @@ def generate_haiku():
 
     # get comment stream until all haiku lines are filled
     while not lineOneFlag or not lineTwoFlag or not lineThreeFlag:
-        for comment in comment_stream(r, 'all', limit=100):
+        for comment in comment_stream(r, subreddit, limit=100):
 
             # reset syllable count
             syl = 0
@@ -96,6 +91,7 @@ def generate_haiku():
                 if len(word) == 1 and not single_check(word):
                     break
 
+                # pull the dict definition and count the syllables
                 definition = dictionary[word.lower()]
                 for item in definition:
                     for char in item:
@@ -108,7 +104,7 @@ def generate_haiku():
                             print('char: ', char)
                             print('syl count: ', syl)
                             """
-                    # set the used flag
+                    # set the used flag so it doesn't count syllables in multiple entries
                     usedFlag = True
 
             # check for matching syllable counts and fill in lines
@@ -131,24 +127,12 @@ def generate_haiku():
             if lineOneFlag and lineTwoFlag and lineThreeFlag:
                 break
 
-    # respond to comment with haiku
+    # construct haiku string to return
     theHaiku = lineOne + '\n\n' + lineTwo + '\n\n' + lineThree + '\n\n' + '***' +\
                '\n\n By: ' + str(authorOne.name) + ', ' + str(authorTwo.name) + \
-               ', and ' + str(authorThree.name)
-
-
-    """
-    # print out the haiku
-    print('***********************************************************')
-    print('An original Reddit haiku:')
-    print('')
-    print(lineOne)
-    print(lineTwo)
-    print(lineThree)
-    print('')
-    print('By: /u/', authorOne.name, ', /u/', authorTwo.name, ', and /u/', authorThree.name)
-    print('***********************************************************')
-    """
+               ', and ' + str(authorThree.name) + '\n\n I am a bot. This Haiku was ' + \
+               'constructed from comments on the /r/all stream.\n\n If a line contained ' +\
+               'too many syllables, please PM me so I can get better!'
 
     # appends haiku to csv file
     with open("haikus.csv", "a") as logfile:
@@ -158,8 +142,17 @@ def generate_haiku():
 
 # wait for a user to summon the bot
 while True:
-    for comment in comment_stream(r, 'teefourpythontest', limit=1):
-        if comment.body == "FreshHaikuBot! Write me a haiku.":
+    for comment in comment_stream(r, subreddit, limit=100):
+        # if comment.body == "FreshHaikuBot! Write me a haiku.":
+        if "FreshHaikuBot! Write me a haiku." in comment.body:
+            # print to console to know its working
+            print('\n*****************************')
+            print('request received. Working...')
+            print('*****************************\n')
+
+            # get a haiku
             haiku = generate_haiku()
+
+            # send the haiku to the requester and print it to console
             comment.reply(haiku)
             print(haiku)
