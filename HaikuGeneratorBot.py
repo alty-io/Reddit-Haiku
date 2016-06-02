@@ -19,7 +19,7 @@ user_agent = "User-Agent: HaikuGen 0.1 (by /u/teefour)"
 r = praw.Reddit(user_agent=user_agent)
 
 #r.set_oauth_app_info(client_id='VU5UkWmSxrKo8Q',
- #                    client_secret='lEqInv-O7Hygig3y3dILtNYpYz8',
+#                    client_secret='lEqInv-O7Hygig3y3dILtNYpYz8',
 
 
 r.login('FreshHaikuBot', 'fishsticks', disable_warning=True)
