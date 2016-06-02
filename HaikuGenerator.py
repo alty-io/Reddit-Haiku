@@ -1,6 +1,6 @@
 """
 haiku generator v0.1
-by Alex Hildreth
+by Alex Hildreth and Tyler Sullivan
 
 Using the PRAW library and CMU pronunciation dictionary, this script
 parses the stream of current reddit comments for lines of 5 and 7 syllables.
@@ -13,6 +13,8 @@ import praw
 from praw.helpers import comment_stream
 from nltk.corpus import cmudict
 import re
+import csv
+import os.path
 
 user_agent = "User-Agent: HaikuGen 0.1 (by /u/teefour)"
 
@@ -21,10 +23,9 @@ r = praw.Reddit(user_agent=user_agent)
 #r.set_oauth_app_info(client_id='VU5UkWmSxrKo8Q',
 #                    client_secret='lEqInv-O7Hygig3y3dILtNYpYz8',
 
-
 r.login('FreshHaikuBot', 'fishsticks', disable_warning=True)
-
 # subreddit = 'all'
+
 
 
 # create a haiku on demand
@@ -34,6 +35,14 @@ def generate_haiku():
     lineThreeFlag = False
 
     dictionary = cmudict.dict()
+
+    DELIM=','
+    # sets up csv file if it doesn't already exist for saving haikus
+    fieldnames = ['lineOne', 'lineTwo', 'lineThree', 'authorOne', 'authorTwo', 'authorThree']
+    if not os.path.isfile("haikus.csv"):
+        with open("haikus.csv", "w") as logfile:
+            wr = csv.writer(logfile, delimiter=DELIM, lineterminator='\n')
+            wr.writerow(fieldnames)
 
     # checks if a string passed to it is a legitimate single letter word
     def single_check(char):
@@ -134,7 +143,12 @@ def generate_haiku():
     print('')
     print('By: /u/', authorOne.name, ', /u/', authorTwo.name, ', and /u/', authorThree.name)
     print('***********************************************************')
-"""
+    """
+
+    # appends haiku to csv file
+    with open("haikus.csv", "a") as logfile:
+        wr = csv.writer(logfile, delimiter=DELIM, lineterminator='\n')
+        wr.writerow([lineOne, lineTwo, lineThree, authorOne, authorTwo, authorThree])
     return theHaiku
 
 # wait for a user to summon the bot
