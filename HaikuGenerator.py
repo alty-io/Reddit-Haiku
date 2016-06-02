@@ -1,12 +1,11 @@
 """
-haiku generator v0.1
+
+haiku generator v0.2
 by Alex Hildreth and Tyler Sullivan
 
 Using the PRAW library and CMU pronunciation dictionary (part of NLTK), this script
 parses the stream of current reddit comments for lines of 5 and 7 syllables.
 These are then constructed into a haiku and displayed to the user.
-
-other conflict testing
 
 """
 
