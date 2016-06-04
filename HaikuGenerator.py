@@ -141,6 +141,12 @@ def generate_haiku():
         wr.writerow([lineOne, lineTwo, lineThree, authorOne, authorTwo, authorThree])
     return theHaiku
 
+# leave this in to function as a generator without bot function
+haiku = generate_haiku()
+print(haiku)
+
+"""
+# leave this in to function as a reddit bot
 # wait for a user to summon the bot
 while True:
     for comment in comment_stream(r, subreddit, limit=100):
@@ -157,3 +163,4 @@ while True:
             # send the haiku to the requester and print it to console
             comment.reply(haiku)
             print(haiku)
+"""
