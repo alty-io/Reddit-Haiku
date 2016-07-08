@@ -6,6 +6,9 @@ Using the PRAW library and CMU pronunciation dictionary (part of NLTK), this scr
 parses the stream of current reddit comments for lines of 5 and 7 syllables.
 These are then constructed into a haiku and displayed to the user.
 
+This version has bot capabilities. It scans the current comment stream so a user
+may call the bod from anywhere in reddit, and the bot will respond with a haiku.
+
 """
 
 import praw
