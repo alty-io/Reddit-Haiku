@@ -1,5 +1,4 @@
 """
-
 haiku generator v0.2
 by Alex Hildreth and Tyler Sullivan
 
@@ -19,15 +18,7 @@ import os.path
 user_agent = "User-Agent: HaikuGen 0.1 (by /u/teefour)"
 
 r = praw.Reddit(user_agent=user_agent)
-
-#Oauth authentication, will complete when Reddit removes direct login ability
-#r.set_oauth_app_info(client_id='VU5UkWmSxrKo8Q',
-#                    client_secret='lEqInv-O7Hygig3y3dILtNYpYz8',
-
-r.login('FreshHaikuBot', 'fishsticks', disable_warning=True)
 subreddit = 'all'
-
-
 
 # create a haiku on demand
 def generate_haiku():
