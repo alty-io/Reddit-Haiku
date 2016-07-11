@@ -14,7 +14,7 @@ import praw
 from praw.helpers import comment_stream
 from HaikuGenerator import generate_haiku
 
-user_agent = "User-Agent: HaikuGen 0.1 (by /u/teefour)"
+user_agent = "User-Agent: HaikuGen 0.2 (by /u/FreshHaikuBot)"
 
 r = praw.Reddit(user_agent=user_agent)
 
