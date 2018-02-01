@@ -18,7 +18,7 @@ user_agent = "User-Agent: HaikuGen 0.2 (by /u/FreshHaikuBot)"
 
 r = praw.Reddit(user_agent=user_agent)
 
-r.login('FreshHaikuBot', 'fishsticks', disable_warning=True)
+r.login('FreshHaikuBot', '[password here]', disable_warning=True)
 subreddit = 'all'
 
 while True:
